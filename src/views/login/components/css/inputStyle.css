@@ -1,0 +1,14 @@
+/* 修改输入框样式 */
+
+::v-deep input::-webkit-input-placeholder {
+  color: #a8abb2;
+  opacity: 50%;
+}
+.inputDeep >>> .el-input__inner {
+  background-color: rgb(247, 247, 247);
+  border-radius: 3px;
+  border: 0;
+}
+::v-deep .el-input__inner:focus {
+  background-color: white;
+}
