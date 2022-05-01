@@ -18,7 +18,7 @@ export const rules = {
       trigger: 'blur'
     },
     {
-      pattern: /^[a-z0-9]{6}$/,
+      pattern: /^[a-z0-9]{6-}$/,
       message: '验证码错误',
       trigger: 'blur'
     }

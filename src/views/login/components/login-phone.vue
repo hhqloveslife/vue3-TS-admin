@@ -23,7 +23,7 @@
       </el-form-item>
       <div class="ctrlBox">
         <el-checkbox
-          v-model="remeberPassword"
+          v-model="isKeepPassword"
           label="记住密码"
           class="checkBox"
         />
@@ -31,7 +31,11 @@
           >忘记密码</el-link
         >
       </div>
-      <el-button type="primary" class="login-button" size="large"
+      <el-button
+        type="primary"
+        class="login-button"
+        size="large"
+        @click="handleLogin"
         >登录</el-button
       >
     </el-form>
@@ -46,7 +50,11 @@ const phoneLogin = reactive({
   number: '',
   verifyCode: ''
 })
-const remeberPassword = ref()
+const isKeepPassword = ref(false)
+
+const handleLogin = () => {
+  console.log('正在登录')
+}
 </script>
 
 <style scoped>
