@@ -1,11 +1,12 @@
 import { Module } from 'vuex'
-import ILoginState from './types'
-import IRootState from '../types'
+import { ILoginState } from './types'
+import { IRootState } from '../types'
 import {
   accountLoginRequest,
   userInfoRequestById,
   userMenusRequestById
 } from '@/service/login/login'
+import { mapMenusToPermissions, mapMenuToRoutes } from '@/utils/map-menus'
 import { IAccount } from '@/service/login/type'
 import localCache from '@/utils/cache'
 import router from '@/router'
@@ -16,7 +17,8 @@ const loginModule: Module<ILoginState, IRootState> = {
     return {
       token: '',
       userInfo: {},
-      userMenus: []
+      userMenus: [],
+      permissions: []
     }
   },
   getters: {},
@@ -29,15 +31,25 @@ const loginModule: Module<ILoginState, IRootState> = {
     },
     changeUserMenus(state, userMenus: any) {
       state.userMenus = userMenus
+      const routes = mapMenuToRoutes(userMenus)
+      routes.forEach((route) => {
+        router.addRoute('main', route)
+      })
+      //获取用户按钮权限
+      const permissions = mapMenusToPermissions(userMenus)
+      state.permissions = permissions
     }
   },
   actions: {
-    async accountLoginAction({ commit }, payload: IAccount) {
+    async accountLoginAction({ commit, dispatch }, payload: IAccount) {
       //1.实现登录逻辑
       const loginResult = await accountLoginRequest(payload)
       const { id, token } = loginResult.data
       commit('changeToken', token)
       localCache.setCache('token', token)
+
+      //发送初始化请求（获取各个list）
+      dispatch('getInitialDataAction', null, { root: true })
 
       //2.获取用户信息
       const userInfoResult = await userInfoRequestById(id)
@@ -54,10 +66,12 @@ const loginModule: Module<ILoginState, IRootState> = {
       //4.跳到首页
       router.push('/main')
     },
-    loadLocalLoginData({ commit }) {
+    loadLocalLoginData({ commit, dispatch }) {
       const token = localCache.getCache('token')
       if (token) {
         commit('changeToken', token)
+        //发送初始化请求（获取各个list）
+        dispatch('getInitialDataAction', null, { root: true })
       }
       const userInfo = localCache.getCache('userInfo')
       if (userInfo) {
