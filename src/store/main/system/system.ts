@@ -19,7 +19,11 @@ const systemModule: Module<ISystemState, IRootState> = {
       goodsList: [],
       goodsCount: 0,
       menuList: [],
-      menuCount: 0
+      menuCount: 0,
+      departmentList: [],
+      departmentCount: 0,
+      categoryList: [],
+      categoryCount: 0
     }
   },
   mutations: {
@@ -46,6 +50,18 @@ const systemModule: Module<ISystemState, IRootState> = {
     },
     changeMenuCount(state, menuCount: number) {
       state.menuCount = menuCount
+    },
+    changeDepartmentList(state, list: any[]) {
+      state.departmentList = list
+    },
+    changeDepartmentCount(state, count: number) {
+      state.departmentCount = count
+    },
+    changeCategoryList(state, list: any[]) {
+      state.categoryList = list
+    },
+    changeCategoryCount(state, count: number) {
+      state.categoryCount = count
     }
   },
   getters: {
@@ -75,6 +91,7 @@ const systemModule: Module<ISystemState, IRootState> = {
       commit(`change${changePageName}List`, list)
       commit(`change${changePageName}Count`, totalCount)
     },
+    //删除请求
     async deletePageDataAction({ dispatch }, payload: any) {
       const { id, pageName } = payload
       const pageUrl = `/${pageName}/${id}`

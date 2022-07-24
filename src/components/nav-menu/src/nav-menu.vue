@@ -11,18 +11,24 @@
       </div>
       <template v-for="item in userMenus" :key="item.id + ''"
         ><!-- 这里绑定的key接收的是字符串，所以要将id转成string（常用做法是+ ‘’）-->
-        <el-sub-menu :index="item.id + ''" class="submenu"
+        <el-sub-menu
+          :index="item.id + ''"
+          class="submenu"
+          v-if="item.name !== '随便聊聊'"
           ><!--这里bind一个index，让每个菜单可以单独展开关闭，因为这个菜单的展开关闭是根据index，如果index相同，就一起展开 -->
           <template #title>
             <el-icon size="20">
-              <component :is="icons[item.id]" style="color: #123456"> </component>
+              <component :is="icons[item.id]" style="color: #123456">
+              </component>
             </el-icon>
             <span class="name">{{ item.name }}</span>
           </template>
           <template v-for="sub in item.children" :key="sub.id + ''">
-            <el-menu-item :index="sub.id + ''" @click="handleMenuItemClick(sub)">{{
-              sub.name
-            }}</el-menu-item>
+            <el-menu-item
+              :index="sub.id + ''"
+              @click="handleMenuItemClick(sub)"
+              >{{ sub.name }}</el-menu-item
+            >
           </template>
         </el-sub-menu>
       </template>
@@ -43,7 +49,7 @@ const router = useRouter()
 const route = useRoute()
 const userMenus = computed(() => store.state.login.userMenus)
 //这种取icon的方式，我自己都看笑了hhh，不过没办法，elementplus改版了，后端数据没更新
-const icons = reactive({
+const icons: any = reactive({
   38: markRaw(Monitor),
   1: markRaw(Setting),
   9: markRaw(Goods),
