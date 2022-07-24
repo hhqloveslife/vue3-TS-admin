@@ -88,7 +88,7 @@ export function pathMapToMenu(
 //     }
 //   }
 // }
-
+//权限管理，获取权限并存入数组
 export function mapMenusToPermissions(userMenus: any[]) {
   const permissions: string[] = []
   const _recurseGetPermission = (menus: any[]) => {
