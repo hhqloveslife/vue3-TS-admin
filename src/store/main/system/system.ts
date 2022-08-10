@@ -90,6 +90,7 @@ const systemModule: Module<ISystemState, IRootState> = {
         pageName.slice(0, 1).toUpperCase() + pageName.slice(1)
       commit(`change${changePageName}List`, list)
       commit(`change${changePageName}Count`, totalCount)
+      console.log()
     },
     //删除请求
     async deletePageDataAction({ dispatch }, payload: any) {

@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import { firstMenu } from '@/utils/map-menus'
 import localCache from '@/utils/cache'
 
+//component写成函数形式是路由懒加载
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',

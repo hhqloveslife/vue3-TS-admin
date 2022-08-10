@@ -73,6 +73,8 @@ const editCallBack = () => {
 }
 const [pageModalRef, defaultInfo, handleNewData, handleEditData]: any =
   usePageModal(newCallBack, editCallBack)
+
+console.log(store.state.userMenus)
 </script>
 
 <style scoped></style>
